@@ -23,15 +23,38 @@ public class BahnhofEntfernungsrechnerControllerTest {
 
     @Test
     public void testDistanceFromFFToBLS() throws Exception {
-        BahnhoefeDistance mockedDist = new BahnhoefeDistance(
+        BahnhoefeDistance mockedDistanceFFToBLS = new BahnhoefeDistance(
                 "Frankfurt(Main)Hbf",
                 "Berlin Hbf",
-                423,
-                "km"
+                423
         );
-        final String expectedResponseContent = objectMapper.writeValueAsString(mockedDist);
+        testDistanceExpectSuccess("/api/v1/distance/FF/BLS", mockedDistanceFFToBLS);
+    }
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/v1/distance/FF/BLS").accept(MediaType.APPLICATION_JSON))
+    @Test
+    public void testDistanceFromBLSToFF() throws Exception {
+        BahnhoefeDistance mockedDistanceBLSToFF = new BahnhoefeDistance(
+                "Berlin Hbf",
+                "Frankfurt(Main)Hbf",
+                423
+        );
+        testDistanceExpectSuccess("/api/v1/distance/BLS/FF", mockedDistanceBLSToFF);
+    }
+
+    @Test
+    public void testDistanceFromFFToFF() throws Exception {
+        BahnhoefeDistance mockedDistanceBLSToFF = new BahnhoefeDistance(
+                "Frankfurt(Main)Hbf",
+                "Frankfurt(Main)Hbf",
+                0
+        );
+        testDistanceExpectSuccess("/api/v1/distance/FF/FF", mockedDistanceBLSToFF);
+    }
+
+    private void testDistanceExpectSuccess(String uriPath, BahnhoefeDistance mockedDistance) throws Exception {
+        final String expectedResponseContent = objectMapper.writeValueAsString(mockedDistance);
+
+        mvc.perform(MockMvcRequestBuilders.get(uriPath).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResponseContent));
     }
