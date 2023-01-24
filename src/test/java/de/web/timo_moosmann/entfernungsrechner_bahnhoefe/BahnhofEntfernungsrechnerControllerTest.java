@@ -28,7 +28,7 @@ public class BahnhofEntfernungsrechnerControllerTest {
                 "Berlin Hbf",
                 423
         );
-        testDistanceExpectSuccess("/api/v1/distance/FF/BLS", mockedDistanceFFToBLS);
+        testExpectBahnhofDistanceObjectWithSuccess("/api/v1/distance/FF/BLS", mockedDistanceFFToBLS);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class BahnhofEntfernungsrechnerControllerTest {
                 "Frankfurt(Main)Hbf",
                 423
         );
-        testDistanceExpectSuccess("/api/v1/distance/BLS/FF", mockedDistanceBLSToFF);
+        testExpectBahnhofDistanceObjectWithSuccess("/api/v1/distance/BLS/FF", mockedDistanceBLSToFF);
     }
 
     @Test
@@ -48,14 +48,38 @@ public class BahnhofEntfernungsrechnerControllerTest {
                 "Frankfurt(Main)Hbf",
                 0
         );
-        testDistanceExpectSuccess("/api/v1/distance/FF/FF", mockedDistanceBLSToFF);
+        testExpectBahnhofDistanceObjectWithSuccess("/api/v1/distance/FF/FF", mockedDistanceBLSToFF);
     }
 
-    private void testDistanceExpectSuccess(String uriPath, BahnhoefeDistance mockedDistance) throws Exception {
+    @Test
+    public void testStartDS100IsInvalid() throws Exception {
+        testExpectErrorMessageWithBadRequest(
+                "/api/v1/distance/XYZ/FF",
+                "Could not find Bahnhof with DS100 Code: XYZ"
+        );
+    }
+
+    @Test
+    public void testDestinationDS100IsInvalid() throws Exception {
+        testExpectErrorMessageWithBadRequest(
+                "/api/v1/distance/FF/XYZ",
+                "Could not find Bahnhof with DS100 Code: XYZ"
+        );
+    }
+
+    private void testExpectBahnhofDistanceObjectWithSuccess(
+            String requestPath, BahnhoefeDistance mockedDistance
+    ) throws Exception {
         final String expectedResponseContent = objectMapper.writeValueAsString(mockedDistance);
 
-        mvc.perform(MockMvcRequestBuilders.get(uriPath).accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get(requestPath).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResponseContent));
+    }
+
+    private void testExpectErrorMessageWithBadRequest(String requestPath, String errorMessage) throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get(requestPath).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(errorMessage));
     }
 }
