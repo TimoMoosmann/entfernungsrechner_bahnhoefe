@@ -1,23 +1,21 @@
 package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @ToString
 public class BahnhofLocation {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @Column(length=6, nullable=false, unique=true)
-    private List<String> ds100;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    private List<String> ds100List;
 
     @Column(nullable=false)
     private String fullName;
@@ -28,6 +26,12 @@ public class BahnhofLocation {
     @Column(nullable=false)
     private Double breite;
 
+    public BahnhofLocation(List<String> ds100List, String fullName, Double laenge, Double breite) {
+        this.ds100List = ds100List;
+        this.fullName = fullName;
+        this.laenge = laenge;
+        this.breite = breite;
+    }
     public void setLaenge(String laenge) {
         this.laenge = getDoubleFromGermanNumberFormat(laenge);
     }
