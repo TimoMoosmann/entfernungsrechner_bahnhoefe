@@ -1,12 +1,15 @@
 package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class BahnhofLocation {
 
     @Id
@@ -14,7 +17,7 @@ public class BahnhofLocation {
     private Long id;
 
     @Column(length=6, nullable=false, unique=true)
-    private String ds100;
+    private List<String> ds100;
 
     @Column(nullable=false)
     private String fullName;
