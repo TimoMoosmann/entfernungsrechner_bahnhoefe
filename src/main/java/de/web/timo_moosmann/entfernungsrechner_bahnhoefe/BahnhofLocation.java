@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter @Setter @NoArgsConstructor @ToString
@@ -42,5 +43,21 @@ public class BahnhofLocation {
 
     private Double getDoubleFromGermanNumberFormat(String germanNumber) {
         return Double.parseDouble(germanNumber.replace(',', '.'));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BahnhofLocation that = (BahnhofLocation) o;
+        return Objects.equals(ds100List, that.ds100List) &&
+                Objects.equals(fullName, that.fullName) &&
+                Objects.equals(laenge, that.laenge) &&
+                Objects.equals(breite, that.breite);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ds100List, fullName, laenge, breite);
     }
 }
