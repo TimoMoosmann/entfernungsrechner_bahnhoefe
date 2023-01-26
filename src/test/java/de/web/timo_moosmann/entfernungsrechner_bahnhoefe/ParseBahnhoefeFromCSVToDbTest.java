@@ -22,8 +22,8 @@ public class ParseBahnhoefeFromCSVToDbTest {
         BahnhofLocation expectedBahnhofLocationHanauHBF = new BahnhofLocation(
                 Arrays.asList("FH", "FH  N", "FH  S"),
                 "Hanau Hbf",
-                8.929,
-                50.120953
+                50.120953,
+                8.929
         );
 
         BahnhofLocation bahnhofLocationHanauHbfFetch1 = bahnhofLocationRepository.retrieveByDS100("FH");
@@ -40,8 +40,8 @@ public class ParseBahnhoefeFromCSVToDbTest {
         BahnhofLocation expectedBahnhofLocationJenaGoeschwitz = new BahnhofLocation(
                 Collections.singletonList("UGW"),
                 "Jena-Göschwitz",
-                11.593537,
-                50.883942
+                50.883942,
+                11.593537
         );
         BahnhofLocation bahnhofLocationJenaGoeschwitzFetch = bahnhofLocationRepository.retrieveByDS100("UGW");
         assertEquals(expectedBahnhofLocationJenaGoeschwitz, bahnhofLocationJenaGoeschwitzFetch);
@@ -52,8 +52,8 @@ public class ParseBahnhoefeFromCSVToDbTest {
         BahnhofLocation expectedBahnhofLocationUebersee = new BahnhofLocation(
                 Collections.singletonList("MUS"),
                 "Übersee",
-                12.487338,
-                47.822047
+                47.822047,
+                12.487338
         );
         BahnhofLocation bahnhofLocationUeberseeFetch = bahnhofLocationRepository.retrieveByDS100("MUS");
         assertEquals(expectedBahnhofLocationUebersee, bahnhofLocationUeberseeFetch);

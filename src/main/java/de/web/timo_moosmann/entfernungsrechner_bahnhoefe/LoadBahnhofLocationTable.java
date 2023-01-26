@@ -41,8 +41,8 @@ public class LoadBahnhofLocationTable {
                     fernverkehrBahnhofLocations.add(new BahnhofLocation(
                             Arrays.asList(currentLine.get("DS100").split(",")),
                             currentLine.get("NAME"),
-                            numberFormatter.getDoubleFromGermanNumberString(currentLine.get("Laenge")),
-                            numberFormatter.getDoubleFromGermanNumberString(currentLine.get("Breite"))
+                            numberFormatter.getDoubleFromGermanNumberString(currentLine.get("Breite")),
+                            numberFormatter.getDoubleFromGermanNumberString(currentLine.get("Laenge"))
                     ));
                 }
                 currentLine = csvReaderHeaderAware.readMap();

@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class GeoLocationDistanceService {
 
-    Double getHaversineDistance(
+    public static final Double EARTH_RADIUS = 6378.1;
+
+    // Inspired by https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
+    private Double getHaversineDistance(
             double latitude1, double longitude1,
             double latitude2, double longitude2,
             double radius
@@ -19,5 +22,10 @@ public class GeoLocationDistanceService {
                 Math.cos(latitude1Radians) * Math.cos(latitude2Radians) *
                         Math.pow(Math.sin(longitudeDiffRadians / 2), 2);
         return 2 * radius * Math.asin(Math.sqrt(inner));
+    }
+
+    public int getApproximatedDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
+        Double res =  this.getHaversineDistance(latitude1, longitude1, latitude2, longitude2, EARTH_RADIUS);
+        return (int)Math.round(res);
     }
 }

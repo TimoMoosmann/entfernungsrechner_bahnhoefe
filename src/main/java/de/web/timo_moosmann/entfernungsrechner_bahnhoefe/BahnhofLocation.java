@@ -22,16 +22,16 @@ public class BahnhofLocation {
     private String fullName;
 
     @Column(nullable=false)
-    private Double laenge;
+    private Double latitude;
 
     @Column(nullable=false)
-    private Double breite;
+    private Double longitude;
 
-    public BahnhofLocation(List<String> ds100List, String fullName, Double laenge, Double breite) {
+    public BahnhofLocation(List<String> ds100List, String fullName, Double latitude, Double longitude) {
         this.ds100List = ds100List;
         this.fullName = fullName;
-        this.laenge = laenge;
-        this.breite = breite;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     @Override
     public boolean equals(Object o) {
@@ -40,12 +40,12 @@ public class BahnhofLocation {
         BahnhofLocation that = (BahnhofLocation) o;
         return Objects.equals(ds100List, that.ds100List) &&
                 Objects.equals(fullName, that.fullName) &&
-                Objects.equals(laenge, that.laenge) &&
-                Objects.equals(breite, that.breite);
+                Objects.equals(longitude, that.longitude) &&
+                Objects.equals(latitude, that.latitude);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ds100List, fullName, laenge, breite);
+        return Objects.hash(ds100List, fullName, longitude, latitude);
     }
 }
