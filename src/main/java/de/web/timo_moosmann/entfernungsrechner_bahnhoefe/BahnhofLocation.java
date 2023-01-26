@@ -33,18 +33,6 @@ public class BahnhofLocation {
         this.laenge = laenge;
         this.breite = breite;
     }
-    public void setLaenge(String laenge) {
-        this.laenge = getDoubleFromGermanNumberFormat(laenge);
-    }
-
-    public void setBreite(String breite) {
-        this.breite = getDoubleFromGermanNumberFormat(breite);
-    }
-
-    private Double getDoubleFromGermanNumberFormat(String germanNumber) {
-        return Double.parseDouble(germanNumber.replace(',', '.'));
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

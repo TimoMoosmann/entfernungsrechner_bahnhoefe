@@ -1,38 +1,54 @@
 package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
 
+import com.opencsv.CSVReaderHeaderAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class LoadBahnhofLocationTable {
 
     private static final Logger log = LoggerFactory.getLogger(LoadBahnhofLocationTable.class);
 
+    @Autowired
+    private CsvParserService csvParserService;
+
+    @Autowired
+    private StringParser numberFormatter;
+
     @Bean
-    CommandLineRunner initDatabase(BahnhofLocationRepository repository) {
+    CommandLineRunner initDatabase(BahnhofLocationRepository bahnhofLocationRepository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new BahnhofLocation(
-                    Arrays.asList("FH","FH  N","FH  S"),
-                    "Hanau Hbf",
-                    8.929,
-                    50.120953
-            )));
-            log.info("Preloading " + repository.save(new BahnhofLocation(
-                    Collections.singletonList("HH"),
-                    "Hannover Hbf",
-                    9.741021,
-                    52.376761
-            )));
+            String bahnhoefeCsvPath = ClassLoader.getSystemResource("csv/D_Bahnhof_2020_alle.csv").getPath();
 
-            log.info("Load id 1: " + repository.findById((long)1));
-            log.info("From DS100 = FH, got: " + repository.retrieveByDS100("FH"));
+            CSVReaderHeaderAware csvReaderHeaderAware =
+                    csvParserService.getCSVReaderHeaderAware(bahnhoefeCsvPath, ';');
+
+            Map<String, String> currentLine = csvReaderHeaderAware.readMap();
+            List<BahnhofLocation> fernverkehrBahnhofLocations = new ArrayList<>();
+
+            while (currentLine != null) {
+                if ((currentLine.get("Verkehr")).equals("FV")) {
+                    fernverkehrBahnhofLocations.add(new BahnhofLocation(
+                            Arrays.asList(currentLine.get("DS100").split(",")),
+                            currentLine.get("NAME"),
+                            numberFormatter.getDoubleFromGermanNumberString(currentLine.get("Laenge")),
+                            numberFormatter.getDoubleFromGermanNumberString(currentLine.get("Breite"))
+                    ));
+                }
+                currentLine = csvReaderHeaderAware.readMap();
+            }
+            log.info("Inserted {} BahnhofLocation Objects into Database.", fernverkehrBahnhofLocations.size());
+            bahnhofLocationRepository.saveAll(fernverkehrBahnhofLocations);
         };
     }
 }
