@@ -8,6 +8,7 @@ public class GeoLocationDistanceService {
     public static final Double EARTH_RADIUS = 6378.1;
 
     // Inspired by https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
+    // and https://en.wikipedia.org/wiki/Haversine_formula
     private Double getHaversineDistance(
             double latitude1, double longitude1,
             double latitude2, double longitude2,
