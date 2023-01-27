@@ -56,7 +56,7 @@ public class BahnhofEntfernungsrechnerControllerTest {
     public void testStartDS100IsInvalid() throws Exception {
         testExpectErrorMessageWithBadRequest(
                 "/api/v1/distance/XYZ/FF",
-                "Could not find Bahnhof with DS100 Code: XYZ"
+                "Could not find Fernverkehrsbahnhof with DS100 Code: XYZ"
         );
     }
 
@@ -64,7 +64,7 @@ public class BahnhofEntfernungsrechnerControllerTest {
     public void testDestinationDS100IsInvalid() throws Exception {
         testExpectErrorMessageWithBadRequest(
                 "/api/v1/distance/FF/XYZ",
-                "Could not find Bahnhof with DS100 Code: XYZ"
+                "Could not find Fernverkehrsbahnhof with DS100 Code: XYZ"
         );
     }
 
