@@ -1,4 +1,4 @@
-package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
+package de.web.timo_moosmann.entfernungsrechner_bahnhoefe.bahnhoflocationutils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,6 +1,8 @@
-package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
+package de.web.timo_moosmann.entfernungsrechner_bahnhoefe.csvloader;
 
 import com.opencsv.CSVReaderHeaderAware;
+import de.web.timo_moosmann.entfernungsrechner_bahnhoefe.bahnhoflocationutils.BahnhofLocation;
+import de.web.timo_moosmann.entfernungsrechner_bahnhoefe.bahnhoflocationutils.BahnhofLocationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

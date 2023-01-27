@@ -1,4 +1,4 @@
-package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
+package de.web.timo_moosmann.entfernungsrechner_bahnhoefe.csvloader;
 
 import org.springframework.stereotype.Service;
 

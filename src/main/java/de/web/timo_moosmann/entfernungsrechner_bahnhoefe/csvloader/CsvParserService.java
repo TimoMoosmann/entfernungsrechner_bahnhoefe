@@ -1,4 +1,4 @@
-package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
+package de.web.timo_moosmann.entfernungsrechner_bahnhoefe.csvloader;
 
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReaderHeaderAware;

@@ -1,5 +1,8 @@
-package de.web.timo_moosmann.entfernungsrechner_bahnhoefe;
+package de.web.timo_moosmann.entfernungsrechner_bahnhoefe.distancecalculator;
 
+import de.web.timo_moosmann.entfernungsrechner_bahnhoefe.bahnhoflocationutils.BahnhofLocation;
+import de.web.timo_moosmann.entfernungsrechner_bahnhoefe.bahnhoflocationutils.BahnhofLocationRepository;
+import de.web.timo_moosmann.entfernungsrechner_bahnhoefe.bahnhoflocationutils.BahnhofNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
